@@ -36,8 +36,6 @@
             </div>
         </div>
 
-        <!-- SweetAlert2 弹出框 -->
-        <!-- <sweet-modal ref="sweetModal"></sweet-modal> -->
     </div>
 </template>
 <script>
@@ -90,9 +88,7 @@ export default {
     },
     created() {
         var url = "http://localhost:5077/api/User/NeedToken";
-        // axios.post(url).then(res => {
-        //     console.log(res.data)
-        // })
+
 
         const api = createAxiosInstance();
         api.post(url).then(res => {
@@ -104,38 +100,27 @@ export default {
         openDialog() {
             this.showDialog = true;
             this.htmlContext = this.converter.makeHtml(this.mdContext);
-            //console.log(this.htmlContext);
-            // 获取所有分类名称以及标签 并绑定数据
+
             var url1 = "http://localhost:5077/api/Category/GetAllCategory";
             var url2 = "http://localhost:5077/api/Tag/GetAllTags";
             const api = createAxiosInstance();
             api.get(url1).then(res => {
                 this.categorys = res.data.data;
-                //console.log(this.categorys)
+
             }
             );
             api.get(url2).then(res => {
                 this.tags = res.data.data;
-                //console.log(this.tags);
+
             })
         },
         closeDialog() {
             this.showDialog = false;
         },
         publishArticle() {
-            // // 在这里处理发布文章的逻辑，使用 this.articleTitle, this.articleSummary, this.articleTags, this.articleCategory
-            // console.log('文章标题:', this.articleTitle);
-            // console.log('文字摘要:', this.articleSummary);
-            // // console.log('文章标签:', this.articleTags);
-            // // console.log('文章分类:', this.articleCategory);
-
             // 将选择的分类Id和标签Id映射到列表中
             this.selectedCategoryId = this.selectedCategories[0];
             this.selectedTagsId = this.selectedTags;
-
-            // console.log(this.authorId);
-            // console.log(this.selectedTagsId);
-            // console.log(this.selectedCategoryId);
 
             const api = createAxiosInstance();
             var url = "http://localhost:5077/api/Article/ReleaseArticle";
@@ -168,8 +153,6 @@ export default {
                 this.selectedTags = this.selectedTags.filter(id => id !== tag.id);
             } else {
                 this.selectedTags.push(tag.id);
-                // this.selectedTagsId.push(tag.id);
-                // console.log(this.selectedTagsId);
             }
         },
         toggleCategory(category) {
@@ -179,9 +162,6 @@ export default {
             } else {
                 // 选择新的分类，清除之前选中的分类
                 this.selectedCategories = [category.id];
-                // // 保存选中的分类Id
-                // this.selectedCategoryId = category.id;
-                // console.log(this.selectedCategoryId);
             }
         }
     }
